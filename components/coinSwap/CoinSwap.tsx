@@ -2,20 +2,17 @@ import Moralis from "moralis/types";
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import { availableCoinsData } from "../../lib/constants";
-import { IComponent } from "../interfaces";
-import { initialSwapState, ISwapState } from "../interfaces/coinSwap";
+import { initialSwapState, ISwapState } from "../interfaces";
 import { buttonStyles, coinSwapStyles } from "../styles";
 import CoinSwapInput from "./CoinSwapInput";
 import CoinSwapSelect from "./CoinSwapSelect";
-
-interface ICoinSwapProps extends IComponent {}
 
 const coinSwapSelectData = {
   to: { labelText: "To coin", name: "to" },
   from: { labelText: "From coin", name: "from" },
 };
 
-const CoinSwap = ({}: ICoinSwapProps) => {
+const CoinSwap = () => {
   const [swapState, setSwapState] = useState<ISwapState>(initialSwapState);
   const [error, setError] = useState<string>("");
   const { Moralis, user, isAuthenticated } = useMoralis();

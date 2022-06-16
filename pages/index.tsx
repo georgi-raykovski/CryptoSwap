@@ -4,9 +4,10 @@ import Container from "../components/Container";
 import { MoralisProvider } from "react-moralis";
 import Header from "../components/header/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
+import CryptoTableContainer from "../components/cryptoTable/CryptoTableContainer";
 
 const styles = {
-  main: "h-full flex flex-col items-center justify-center bg-emerald-500",
+  main: "h-full flex items-center justify-evenly bg-emerald-500",
 };
 
 const Home: NextPage = () => {
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
         <div className="h-screen flex flex-col">
           <Header />
           <Container styles={styles.main}>
+            <CryptoTableContainer />
             <CoinSwap />
           </Container>
         </div>

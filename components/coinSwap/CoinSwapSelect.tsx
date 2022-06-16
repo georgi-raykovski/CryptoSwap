@@ -1,11 +1,8 @@
 import { availableCoinsData } from "../../lib/constants";
+import { ISelect } from "../interfaces";
 import { coinSwapStyles } from "../styles";
 
-interface ICoinSwapSelectProps {
-  name: string;
-  labelText: string;
-  selectChangeHandler: (name: string, value: string) => void;
-}
+interface ICoinSwapSelectProps extends ISelect {}
 
 const CoinSwapSelect = ({ name, labelText, selectChangeHandler }: ICoinSwapSelectProps) => {
   const coinNames = Object.keys(availableCoinsData);
