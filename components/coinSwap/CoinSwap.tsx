@@ -1,23 +1,18 @@
 import Moralis from "moralis/types";
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
-import { availableCoinsData } from "../lib/constants";
-import { IComponent } from "./interfaces";
-import { initialSwapState, ISwapState } from "./interfaces/coinSwap";
-import { buttonStyles } from "./styles";
+import { availableCoinsData } from "../../lib/constants";
+import { IComponent } from "../interfaces";
+import { initialSwapState, ISwapState } from "../interfaces/coinSwap";
+import { buttonStyles, coinSwapStyles } from "../styles";
+import CoinSwapInput from "./CoinSwapInput";
+import CoinSwapSelect from "./CoinSwapSelect";
 
 interface ICoinSwapProps extends IComponent {}
 
-const styles = {
-  coinSwapCointainer: "px-5 py-2.5 border-2 rounded-xl w-1/3",
-  coinSwapFormInputContainer: "mb-3",
-  coinSwapLabel:
-    "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
-  coinSwapInput:
-    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-  coinSwapSelect:
-    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-  coinSwapError: "font-medium mb-3 text-sm text-red-600 dark:text-red-500",
+const coinSwapSelectData = {
+  to: { labelText: "To coin", name: "to" },
+  from: { labelText: "From coin", name: "from" },
 };
 
 const CoinSwap = ({}: ICoinSwapProps) => {
@@ -78,9 +73,7 @@ const CoinSwap = ({}: ICoinSwapProps) => {
 
   const buttonClickHandler = async () => {
     setError("");
-    if (
-      swapState.fromAddress.coinAddress === availableCoinsData.eth.coinAddress
-    ) {
+    if (swapState.fromAddress.coinAddress === availableCoinsData.eth.coinAddress) {
       const contractAddress = swapState.toAddress.coinAddress;
       const abi = swapState.toAddress.coinDai;
       const options = {
@@ -102,8 +95,7 @@ const CoinSwap = ({}: ICoinSwapProps) => {
   };
 
   const selectChangeHandler = (name: string, value: string): void => {
-    const selectedAddress =
-      availableCoinsData[value as keyof typeof availableCoinsData];
+    const selectedAddress = availableCoinsData[value as keyof typeof availableCoinsData];
 
     name === "from"
       ? setSwapState((prevState) => ({
@@ -116,34 +108,6 @@ const CoinSwap = ({}: ICoinSwapProps) => {
         }));
   };
 
-  const coinSelect = (name: string, labelText: string): React.ReactElement => {
-    const coinNames = Object.keys(availableCoinsData);
-    const availableCoins =
-      name === "to" ? coinNames.filter((coin) => coin !== "eth") : coinNames;
-
-    return (
-      <div className={styles.coinSwapFormInputContainer}>
-        <label className={styles.coinSwapLabel} htmlFor={name}>
-          {labelText}
-        </label>
-        <select
-          onChange={(e) => selectChangeHandler(name, e.target.value)}
-          className={styles.coinSwapSelect}
-          name={name}
-          id="fromCoin"
-        >
-          {availableCoins.map((key, index) => {
-            return (
-              <option key={index} value={key}>
-                {key.toUpperCase()}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-    );
-  };
-
   const inputChangeHandler = (value: string) => {
     setSwapState((prevState) => ({
       ...prevState,
@@ -151,29 +115,12 @@ const CoinSwap = ({}: ICoinSwapProps) => {
     }));
   };
 
-  const coinInput = (): React.ReactElement => {
-    return (
-      <div className={styles.coinSwapFormInputContainer}>
-        <label htmlFor="amount" className={styles.coinSwapLabel}>
-          Amount
-        </label>
-        <input
-          className={styles.coinSwapInput}
-          type="text"
-          name="amount"
-          id="amount"
-          onChange={(e) => inputChangeHandler(e.target.value)}
-        />
-      </div>
-    );
-  };
-
   return (
-    <div className={styles.coinSwapCointainer}>
-      {coinSelect("from", "From coin")}
-      {coinSelect("to", "To coin")}
-      {coinInput()}
-      {error && <p className={styles.coinSwapError}>{error}</p>}
+    <div className={coinSwapStyles.coinSwapCointainer}>
+      <CoinSwapSelect selectChangeHandler={selectChangeHandler} {...coinSwapSelectData.from} />
+      <CoinSwapSelect selectChangeHandler={selectChangeHandler} {...coinSwapSelectData.to} />
+      <CoinSwapInput inputChangeHandler={inputChangeHandler} />
+      {error && <p className={coinSwapStyles.coinSwapError}>{error}</p>}
       <button
         className={buttonStyles.coinSwap}
         disabled={!isAuthenticated}

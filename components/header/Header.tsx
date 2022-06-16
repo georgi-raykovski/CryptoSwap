@@ -20,10 +20,10 @@ const Header = () => {
     const truncate = "...";
     const lastLetters = initialAddress.slice(-3);
     const formattedAddress = firstLetters + truncate + lastLetters;
+
     return formattedAddress;
   }, [user]);
 
-  // Moralis.enableWeb3();
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>

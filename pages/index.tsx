@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import CoinSwap from "../components/CoinSwap";
+import CoinSwap from "../components/coinSwap/CoinSwap";
 import Container from "../components/Container";
 import { MoralisProvider } from "react-moralis";
 import Header from "../components/header/Header";

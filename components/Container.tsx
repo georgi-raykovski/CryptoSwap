@@ -1,4 +1,3 @@
-import { useMoralis } from "react-moralis";
 import { IComponent } from "./interfaces";
 
 interface IMainProps extends IComponent {
