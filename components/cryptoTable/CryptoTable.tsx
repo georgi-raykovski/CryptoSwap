@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import MultiaxisLineChart from "../MultiaxisLineChart";
+import SkeletonLoader from "../SkeletonLoader";
 import { formattedCurrencyArray } from "./availableCurrency";
 import { availableMarkets } from "./availableMarkets";
 import CryptoTableFilters from "./CryptoTableFilters";
@@ -29,9 +30,9 @@ const CryptoTable = () => {
   });
 
   useEffect(() => {
-    constructEndpoint();
+    refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [endpointState.endpoint]);
 
   const {
     data: coinData,
@@ -42,7 +43,6 @@ const CryptoTable = () => {
     ["currency-daily", endpointState.endpoint],
     async ({ queryKey }) => {
       const response = await fetch(queryKey[1]);
-      console.log(response);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -55,38 +55,39 @@ const CryptoTable = () => {
     }
   );
 
-  const constructEndpoint = useCallback((): void => {
-    setEndpointState((prevState) => ({
-      ...prevState,
-      endpoint:
-        endpointConstants.apiRoot +
-        endpointState.symbol +
-        "/market_chart?vs_currency=" +
-        endpointState.market +
-        "&days=14&interval=daily",
-    }));
-    refetch();
-  }, [endpointState, refetch]);
-
-  console.log(isLoading, isSuccess);
-
   const formattedCoinData: number[] = coinData?.prices.map((price: number[]) => price[1]);
 
-  const filterChangeHandler = useCallback(
-    (name: string, value: string) => {
-      if (name === "market") {
-        setEndpointState((prevState) => ({ ...prevState, market: value }));
-      } else {
-        setEndpointState((prevState) => ({ ...prevState, symbol: value }));
-      }
-      constructEndpoint();
-    },
-    [constructEndpoint]
-  );
+  const filterChangeHandler = useCallback((name: string, value: string) => {
+    if (name === "market") {
+      setEndpointState((prevState) => ({
+        ...prevState,
+        market: value,
+        endpoint:
+          endpointConstants.apiRoot +
+          prevState.symbol +
+          "/market_chart?vs_currency=" +
+          value +
+          "&days=14&interval=daily",
+      }));
+    } else {
+      setEndpointState((prevState) => ({
+        ...prevState,
+        symbol: value,
+        endpoint:
+          endpointConstants.apiRoot +
+          value +
+          "/market_chart?vs_currency=" +
+          prevState.market +
+          "&days=14&interval=daily",
+      }));
+    }
+  }, []);
 
   return (
     <div>
       <CryptoTableFilters filterChangeHandler={filterChangeHandler} />
+      {isLoading && <SkeletonLoader />}
+      {/* <SkeletonLoader /> */}
       {!isLoading && isSuccess && <MultiaxisLineChart coinPriceData={formattedCoinData} />}
     </div>
   );

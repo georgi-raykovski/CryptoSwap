@@ -28,20 +28,15 @@ export const options = {
       display: true,
       text: "Multi Axis",
     },
+    legend: {
+      display: false,
+    },
   },
   scales: {
     y: {
       type: "linear" as const,
       display: true,
       position: "left" as const,
-    },
-    y1: {
-      type: "linear" as const,
-      display: true,
-      position: "right" as const,
-      grid: {
-        drawOnChartArea: false,
-      },
     },
   },
 };
@@ -57,7 +52,7 @@ const MultiaxisLineChart = ({ coinPriceData }: IMultiaxisLineChart) => {
     labels: chartLabels,
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Price History",
         data: chartLabels.map((_, index) => coinPriceData[index]),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
