@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import CryptoTableContainer from "../components/cryptoTable/CryptoTableContainer";
 
 const styles = {
-  main: "h-full flex items-center justify-evenly bg-emerald-500 flex-col-reverse lg:flex-row",
+  main: "min-h-screen h-full flex items-center justify-evenly bg-emerald-300 flex-col-reverse",
 };
 
 const Home: NextPage = () => {
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MoralisProvider appId={appId} serverUrl={serverUrl}>
-        <div className="h-screen flex flex-col">
+        <div className="flex flex-col">
           <Header />
           <Container styles={styles.main}>
             <CryptoTableContainer />

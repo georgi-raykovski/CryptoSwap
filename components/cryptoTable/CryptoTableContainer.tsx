@@ -12,7 +12,7 @@ const CryptoTableContainer = () => {
   );
 
   return (
-    <div className="flex flex-col items-center w-3/6">
+    <div className="flex flex-col items-center mb-6 w-full">
       {tableIsVisible && <CryptoTable />}
       <button onClick={toggleTableVisiblity} className={`${buttonStyles.header}`}>
         {buttonText}

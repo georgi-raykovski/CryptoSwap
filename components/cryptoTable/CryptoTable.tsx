@@ -9,23 +9,31 @@ import CryptoTableFilters from "./CryptoTableFilters";
 interface IEndpoint {
   symbol: string | number;
   market: string | number;
+  days: string;
+  interval: string;
   endpoint: string;
 }
 
 const endpointConstants = {
   apiRoot: "https://api.coingecko.com/api/v3/coins/",
+  initialSymbol: formattedCurrencyArray[0].id,
+  initialMarket: availableMarkets[0],
+  initialDaysCount: "1",
+  initialInterval: "hourly",
   initialEndpoint:
     "https://api.coingecko.com/api/v3/coins/" +
     formattedCurrencyArray[0].id +
     "/market_chart?vs_currency=" +
     availableMarkets[0] +
-    "&days=14&interval=daily",
+    "&days=1&interval=hourly",
 };
 
 const CryptoTable = () => {
   const [endpointState, setEndpointState] = useState<IEndpoint>({
-    symbol: formattedCurrencyArray[0].id,
-    market: availableMarkets[0],
+    days: endpointConstants.initialDaysCount,
+    symbol: endpointConstants.initialSymbol,
+    market: endpointConstants.initialMarket,
+    interval: endpointConstants.initialInterval,
     endpoint: endpointConstants.initialEndpoint,
   });
 
@@ -67,9 +75,34 @@ const CryptoTable = () => {
           prevState.symbol +
           "/market_chart?vs_currency=" +
           value +
-          "&days=14&interval=daily",
+          `&days=${prevState.days}&interval=${prevState.interval}`,
       }));
-    } else {
+    }
+    if (name === "days") {
+      setEndpointState((prevState) => ({
+        ...prevState,
+        days: value,
+        endpoint:
+          endpointConstants.apiRoot +
+          prevState.symbol +
+          "/market_chart?vs_currency=" +
+          prevState.market +
+          `&days=${value}&interval=${prevState.interval}`,
+      }));
+    }
+    if (name === "interval") {
+      setEndpointState((prevState) => ({
+        ...prevState,
+        interval: value,
+        endpoint:
+          endpointConstants.apiRoot +
+          prevState.symbol +
+          "/market_chart?vs_currency=" +
+          prevState.market +
+          `&days=${prevState.days}&interval=${value}`,
+      }));
+    }
+    if (name === "currency") {
       setEndpointState((prevState) => ({
         ...prevState,
         symbol: value,
@@ -78,17 +111,20 @@ const CryptoTable = () => {
           value +
           "/market_chart?vs_currency=" +
           prevState.market +
-          "&days=14&interval=daily",
+          `&days=${prevState.days}&interval=${prevState.interval}`,
       }));
     }
   }, []);
 
   return (
-    <div>
+    <div className="mb-6 py-5 w-full">
       <CryptoTableFilters filterChangeHandler={filterChangeHandler} />
       {isLoading && <SkeletonLoader />}
-      {/* <SkeletonLoader /> */}
-      {!isLoading && isSuccess && <MultiaxisLineChart coinPriceData={formattedCoinData} />}
+      {!isLoading && isSuccess && (
+        <div className="p-16 w-4/6 mx-auto bg-emerald-100 rounded-lg">
+          <MultiaxisLineChart coinPriceData={formattedCoinData} interval={endpointState.interval} />
+        </div>
+      )}
     </div>
   );
 };

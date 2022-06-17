@@ -10,8 +10,9 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-interface IMultiaxisLineChart {
+interface IMultiaxisLineChartProps {
   coinPriceData: number[];
+  interval: string;
 }
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -26,7 +27,7 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: "Multi Axis",
+      text: "",
     },
     legend: {
       display: false,
@@ -41,9 +42,14 @@ export const options = {
   },
 };
 
-const labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const possibleLabels = {
+  daily: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  hourly: Array.from(Array(24).keys()).map((key: number) => key.toString()),
+};
 
-const MultiaxisLineChart = ({ coinPriceData }: IMultiaxisLineChart) => {
+const MultiaxisLineChart = ({ coinPriceData, interval }: IMultiaxisLineChartProps) => {
+  const labels = possibleLabels[interval as keyof typeof possibleLabels];  
+  
   const chartLabels = coinPriceData.map((_, index) => {
     return labels[index % labels.length];
   });

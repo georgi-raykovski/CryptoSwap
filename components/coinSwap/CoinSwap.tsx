@@ -123,7 +123,7 @@ const CoinSwap = () => {
         disabled={!isAuthenticated}
         onClick={buttonClickHandler}
       >
-        Swap
+        {isAuthenticated ? "Swap" : "Please connect wallet"}
       </button>
     </div>
   );

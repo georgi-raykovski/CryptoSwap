@@ -1,5 +1,5 @@
 export const coinSwapStyles = {
-    coinSwapCointainer: "px-5 py-2.5 border-2 rounded-xl lg:w-1/3 md:w-3/6 sm:w-10/12",
+    coinSwapCointainer: "px-5 py-2.5 my-12 border-2 rounded-xl lg:w-1/3 md:w-3/6 sm:w-10/12",
     coinSwapFormInputContainer: "mb-3",
     coinSwapLabel:
       "block mb-2 text-mb font-medium text-gray-900 dark:text-gray-300",

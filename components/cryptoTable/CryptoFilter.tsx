@@ -5,9 +5,9 @@ interface ICryptoFilterProps extends ISelect {
   optionsData: DigitalCurrencyOrMarket[] | string[];
 }
 
-const isStringArray = (array: ICryptoFilterProps['optionsData']): array is string[] => {
-    return typeof array[0] === 'string';
-}
+const isStringArray = (array: ICryptoFilterProps["optionsData"]): array is string[] => {
+  return typeof array[0] === "string";
+};
 
 const CryptoFilter = ({
   name,
@@ -30,7 +30,9 @@ const CryptoFilter = ({
           ? optionsData.map((key, index) => {
               return (
                 <option key={index} value={key}>
-                  {key.toUpperCase()}
+                  {name === "market"
+                    ? key.toUpperCase()
+                    : key.charAt(0).toUpperCase() + key.slice(1)}
                 </option>
               );
             })
