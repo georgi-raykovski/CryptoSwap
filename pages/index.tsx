@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import CoinSwap from "../components/coinSwap/CoinSwap";
-import Container from "../components/Container";
+import Container from "../components/hoc/Container";
 import { MoralisProvider } from "react-moralis";
 import Header from "../components/header/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CryptoTableContainer from "../components/cryptoTable/CryptoTableContainer";
 
 const styles = {
-  main: "h-full flex items-center justify-evenly bg-emerald-500",
+  main: "h-full flex items-center justify-evenly bg-emerald-500 flex-col-reverse lg:flex-row",
 };
 
 const Home: NextPage = () => {

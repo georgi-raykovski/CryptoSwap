@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import MultiaxisLineChart from "../MultiaxisLineChart";
+import MultiaxisLineChart from "./MultiaxisLineChart";
 import SkeletonLoader from "../SkeletonLoader";
 import { formattedCurrencyArray } from "./availableCurrency";
 import { availableMarkets } from "./availableMarkets";

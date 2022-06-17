@@ -1,4 +1,4 @@
-import { IComponent } from "./interfaces";
+import { IComponent } from "./../interfaces";
 
 interface IMainProps extends IComponent {
   children: React.ReactNode;
