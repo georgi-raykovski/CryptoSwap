@@ -1,13 +1,8 @@
 import { useMemo } from "react";
 import { useMoralis } from "react-moralis";
+import { headerStyles } from "../styles/header";
 import AuthStep from "./AuthStep";
 import HeaderIcon from "./HeaderIcon";
-
-const styles = {
-  header: "p-4 dark:bg-gray-800 dark:text-gray-100",
-  headerContainer: "container flex justify-between h-16 mx-auto",
-  heading: "flex items-center px-2 font-semibold text-lg",
-};
 
 const Header = () => {
   const { authenticate, logout, isAuthenticated, user, Moralis } = useMoralis();
@@ -18,17 +13,17 @@ const Header = () => {
     const initialAddress = user?.get("ethAddress");
     const firstLetters = initialAddress.slice(0, 5);
     const truncate = "...";
-    const lastLetters = initialAddress.slice(-3);
+    const lastLetters = initialAddress.slice(-5);
     const formattedAddress = firstLetters + truncate + lastLetters;
 
     return formattedAddress;
   }, [user]);
 
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContainer}>
+    <header className={headerStyles.header}>
+      <div className={headerStyles.headerContainer}>
         <HeaderIcon />
-        {user && <h1 className={styles.heading}>Welcome {userAddress}</h1>}
+        {user && <h1 className={headerStyles.heading}>Welcome {userAddress}</h1>}
         {isAuthenticated ? (
           <AuthStep clickHandler={logout} buttonText="Logout" />
         ) : (

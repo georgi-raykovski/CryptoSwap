@@ -2,15 +2,11 @@ import Moralis from "moralis/types";
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import { availableCoinsData } from "../../lib/constants";
+import { coinSwapSelectData } from "../constants";
 import { initialSwapState, ISwapState } from "../interfaces";
 import { buttonStyles, coinSwapStyles } from "../styles";
 import CoinSwapInput from "./CoinSwapInput";
 import CoinSwapSelect from "./CoinSwapSelect";
-
-const coinSwapSelectData = {
-  to: { labelText: "To coin", name: "to" },
-  from: { labelText: "From coin", name: "from" },
-};
 
 const CoinSwap = () => {
   const [swapState, setSwapState] = useState<ISwapState>(initialSwapState);
@@ -18,7 +14,7 @@ const CoinSwap = () => {
   const { Moralis, user, isAuthenticated } = useMoralis();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !Moralis.web3) {
       Moralis.enableWeb3();
     }
   }, [isAuthenticated, Moralis]);

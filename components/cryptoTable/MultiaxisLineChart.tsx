@@ -17,7 +17,7 @@ interface IMultiaxisLineChartProps {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export const options = {
+const options = {
   responsive: true,
   interaction: {
     mode: "index" as const,
@@ -48,8 +48,8 @@ const possibleLabels = {
 };
 
 const MultiaxisLineChart = ({ coinPriceData, interval }: IMultiaxisLineChartProps) => {
-  const labels = possibleLabels[interval as keyof typeof possibleLabels];  
-  
+  const labels = possibleLabels[interval as keyof typeof possibleLabels];
+
   const chartLabels = coinPriceData.map((_, index) => {
     return labels[index % labels.length];
   });

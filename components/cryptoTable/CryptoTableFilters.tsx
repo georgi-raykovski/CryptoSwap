@@ -1,6 +1,6 @@
-import { ChangeEvent, useMemo } from "react";
-import { formattedCurrencyArray } from "./availableCurrency";
-import { availableMarkets } from "./availableMarkets";
+import { useMemo } from "react";
+import { formattedCurrencyArray } from "../constants/availableCurrency";
+import { availableMarkets } from "../constants/availableMarkets";
 import CryptoFilter from "./CryptoFilter";
 
 interface ICryptoTableFiltersProps {
@@ -38,7 +38,7 @@ const CryptoTableFilters = ({ filterChangeHandler }: ICryptoTableFiltersProps) =
   }, [filterChangeHandler]);
 
   return (
-    <div className="grid gap-6 mx-auto w-1/3 mb-6 lg:grid-cols-2 items-end">
+    <div className="grid gap-6 mx-auto w-10/12 mb-6 lg:grid-cols-4 items-end">
       {filters.map((filter, index) => (
         <CryptoFilter key={index} {...filter} />
       ))}

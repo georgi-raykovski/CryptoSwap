@@ -5,24 +5,33 @@ import { MoralisProvider } from "react-moralis";
 import Header from "../components/header/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CryptoTableContainer from "../components/cryptoTable/CryptoTableContainer";
+import Tabs from "../components/Tabs";
+import { useState } from "react";
 
 const styles = {
-  main: "min-h-screen h-full flex items-center justify-evenly bg-emerald-300 flex-col-reverse",
+  main: "h-full flex items-center justify-evenly bg-emerald-300 grow",
 };
 
+const tabs = ["Swap", "Dashboard"];
+
 const Home: NextPage = () => {
+  const [activeTab, setActiveTab] = useState<string>(tabs[0]);
   const appId = process.env.APP_ID ?? "";
   const serverUrl = process.env.SERVER_URL ?? "";
   const queryClient = new QueryClient();
 
+  const tabClickHandler = (tabName: string): void => {
+    setActiveTab(tabName);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <MoralisProvider appId={appId} serverUrl={serverUrl}>
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-screen">
           <Header />
+          <Tabs tabClickHandler={tabClickHandler} activeTab={activeTab} tabsArray={tabs} />
           <Container styles={styles.main}>
-            <CryptoTableContainer />
-            <CoinSwap />
+            {activeTab === tabs[0] ? <CoinSwap /> : <CryptoTableContainer />}
           </Container>
         </div>
       </MoralisProvider>

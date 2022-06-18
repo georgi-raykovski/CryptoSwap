@@ -2,26 +2,19 @@ import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import MultiaxisLineChart from "./MultiaxisLineChart";
 import SkeletonLoader from "../SkeletonLoader";
-import { formattedCurrencyArray } from "./availableCurrency";
-import { availableMarkets } from "./availableMarkets";
+import { formattedCurrencyArray } from "../constants/availableCurrency";
+import { availableMarkets } from "../constants/availableMarkets";
 import CryptoTableFilters from "./CryptoTableFilters";
+import { IEndpoint } from "../interfaces";
+import { apiRoot } from "../constants";
 
-interface IEndpoint {
-  symbol: string | number;
-  market: string | number;
-  days: string;
-  interval: string;
-  endpoint: string;
-}
-
-const endpointConstants = {
-  apiRoot: "https://api.coingecko.com/api/v3/coins/",
-  initialSymbol: formattedCurrencyArray[0].id,
-  initialMarket: availableMarkets[0],
-  initialDaysCount: "1",
-  initialInterval: "hourly",
-  initialEndpoint:
-    "https://api.coingecko.com/api/v3/coins/" +
+const initialEndpointState = {
+  symbol: formattedCurrencyArray[0].id,
+  market: availableMarkets[0],
+  days: "1",
+  interval: "hourly",
+  endpoint:
+    apiRoot +
     formattedCurrencyArray[0].id +
     "/market_chart?vs_currency=" +
     availableMarkets[0] +
@@ -29,13 +22,7 @@ const endpointConstants = {
 };
 
 const CryptoTable = () => {
-  const [endpointState, setEndpointState] = useState<IEndpoint>({
-    days: endpointConstants.initialDaysCount,
-    symbol: endpointConstants.initialSymbol,
-    market: endpointConstants.initialMarket,
-    interval: endpointConstants.initialInterval,
-    endpoint: endpointConstants.initialEndpoint,
-  });
+  const [endpointState, setEndpointState] = useState<IEndpoint>(initialEndpointState);
 
   useEffect(() => {
     refetch();
@@ -71,7 +58,7 @@ const CryptoTable = () => {
         ...prevState,
         market: value,
         endpoint:
-          endpointConstants.apiRoot +
+          apiRoot +
           prevState.symbol +
           "/market_chart?vs_currency=" +
           value +
@@ -83,7 +70,7 @@ const CryptoTable = () => {
         ...prevState,
         days: value,
         endpoint:
-          endpointConstants.apiRoot +
+          apiRoot +
           prevState.symbol +
           "/market_chart?vs_currency=" +
           prevState.market +
@@ -95,7 +82,7 @@ const CryptoTable = () => {
         ...prevState,
         interval: value,
         endpoint:
-          endpointConstants.apiRoot +
+          apiRoot +
           prevState.symbol +
           "/market_chart?vs_currency=" +
           prevState.market +
@@ -107,7 +94,7 @@ const CryptoTable = () => {
         ...prevState,
         symbol: value,
         endpoint:
-          endpointConstants.apiRoot +
+          apiRoot +
           value +
           "/market_chart?vs_currency=" +
           prevState.market +

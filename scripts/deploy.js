@@ -18,12 +18,9 @@ async function main() {
   const usdcContract = await usdcFactory.deploy();
   await usdcContract.deployed();
 
-  const dogeFactory = await hre.ethers.getContractFactory('Dogecoin');
+  const dogeFactory = await hre.ethers.getContractFactory("Dogecoin");
   const dogeContract = await dogeFactory.deploy();
-  await dogeContract.deployed()
-
-  console.log("USDC deployed to:", usdcContract.address);
-  console.log("Doge deployed to:", dogeContract.address);
+  await dogeContract.deployed();
 }
 
 // We recommend this pattern to be able to use async/await everywhere
