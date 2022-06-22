@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { coinSwapStyles } from "../styles";
 
 interface ICoinSwapInputProps {

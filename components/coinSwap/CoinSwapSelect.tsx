@@ -4,7 +4,7 @@ import { coinSwapStyles } from "../styles";
 
 interface ICoinSwapSelectProps extends ISelect {}
 
-const CoinSwapSelect = ({ name, labelText, selectChangeHandler }: ICoinSwapSelectProps) => {
+const CoinSwapSelect = ({ name, labelText, selectChangeHandler, id }: ICoinSwapSelectProps) => {
   const coinNames = Object.keys(availableCoinsData);
   const availableCoins = name === "to" ? coinNames.filter((coin) => coin !== "eth") : coinNames;
 
@@ -17,7 +17,7 @@ const CoinSwapSelect = ({ name, labelText, selectChangeHandler }: ICoinSwapSelec
         onChange={(e) => selectChangeHandler(name, e.target.value)}
         className={coinSwapStyles.coinSwapSelect}
         name={name}
-        id="fromCoin"
+        id={id}
       >
         {availableCoins.map((key, index) => {
           return (

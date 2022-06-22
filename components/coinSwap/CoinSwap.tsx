@@ -20,7 +20,7 @@ const CoinSwap = () => {
   }, [isAuthenticated, Moralis]);
 
   const sendEth = async (): Promise<void> => {
-    const contractAddress = availableCoinsData.usdc.coinAddress;
+    const contractAddress = swapState.toAddress.coinAddress;
 
     const options = {
       type: "native" as Moralis.TransferType,
@@ -75,7 +75,7 @@ const CoinSwap = () => {
         abi,
         params: {
           to: user?.get("ethAddress"),
-          amount: Moralis.Units.Token(50),
+          amount: Moralis.Units.Token(swapState.amount),
         },
       };
       sendEth();

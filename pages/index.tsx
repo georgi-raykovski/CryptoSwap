@@ -9,7 +9,8 @@ import Tabs from "../components/Tabs";
 import { useState } from "react";
 
 const styles = {
-  main: "h-full flex items-center justify-evenly bg-emerald-300 grow",
+  main: "flex flex-col min-h-screen",
+  container: "h-full flex items-center justify-evenly bg-emerald-300 grow",
 };
 
 const tabs = ["Swap", "Dashboard"];
@@ -27,10 +28,10 @@ const Home: NextPage = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MoralisProvider appId={appId} serverUrl={serverUrl}>
-        <div className="flex flex-col min-h-screen">
+        <div className={styles.main}>
           <Header />
           <Tabs tabClickHandler={tabClickHandler} activeTab={activeTab} tabsArray={tabs} />
-          <Container styles={styles.main}>
+          <Container styles={styles.container}>
             {activeTab === tabs[0] ? <CoinSwap /> : <CryptoTableContainer />}
           </Container>
         </div>

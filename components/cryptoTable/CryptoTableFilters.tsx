@@ -13,24 +13,28 @@ const CryptoTableFilters = ({ filterChangeHandler }: ICryptoTableFiltersProps) =
       {
         labelText: "Available markets",
         name: "market",
+        id: "market",
         optionsData: availableMarkets,
         selectChangeHandler: (name: string, value: string) => filterChangeHandler(name, value),
       },
       {
         labelText: "Available digital currencies",
         name: "currency",
+        id: "currency",
         optionsData: formattedCurrencyArray,
         selectChangeHandler: (name: string, value: string) => filterChangeHandler(name, value),
       },
       {
         labelText: "Days",
         name: "days",
+        id: "days",
         optionsData: Array.from(Array(30).keys()).map((key: number) => (key + 1).toString()),
         selectChangeHandler: (name: string, value: string) => filterChangeHandler(name, value),
       },
       {
         labelText: "Interval",
         name: "interval",
+        id: "interval",
         optionsData: ["hourly", "daily"],
         selectChangeHandler: (name: string, value: string) => filterChangeHandler(name, value),
       },

@@ -14,6 +14,7 @@ const CryptoFilter = ({
   labelText,
   selectChangeHandler,
   optionsData,
+  id
 }: ICryptoFilterProps) => {
   return (
     <div className={coinSwapStyles.coinSwapFormInputContainer}>
@@ -24,7 +25,7 @@ const CryptoFilter = ({
         onChange={(e) => selectChangeHandler(name, e.target.value)}
         className={coinSwapStyles.coinSwapSelect}
         name={name}
-        id="fromCoin"
+        id={id}
       >
         {isStringArray(optionsData)
           ? optionsData.map((key, index) => {

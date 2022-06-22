@@ -5,7 +5,7 @@ import AuthStep from "./AuthStep";
 import HeaderIcon from "./HeaderIcon";
 
 const Header = () => {
-  const { authenticate, logout, isAuthenticated, user, Moralis } = useMoralis();
+  const { authenticate, logout, isAuthenticated, user } = useMoralis();
 
   const userAddress = useMemo((): string => {
     if (!user) return "";

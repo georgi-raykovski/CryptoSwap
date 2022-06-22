@@ -21,6 +21,9 @@ const initialEndpointState = {
     "&days=1&interval=hourly",
 };
 
+const minuteInMilliseconds = 60000;
+const hourInMilliseconds = 60 * 60000;
+
 const CryptoTable = () => {
   const [endpointState, setEndpointState] = useState<IEndpoint>(initialEndpointState);
 
@@ -46,7 +49,8 @@ const CryptoTable = () => {
       return response.json();
     },
     {
-      refetchInterval: 100000,
+      refetchInterval: minuteInMilliseconds,
+      staleTime: hourInMilliseconds,
     }
   );
 
